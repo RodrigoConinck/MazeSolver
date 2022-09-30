@@ -1,7 +1,7 @@
-from turtle import *
+import turtle
 from time import sleep
 from random import randint
 
-janela = Screen()
+janela = turtle.Screen()
 
 janela.mainloop()
