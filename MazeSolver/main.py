@@ -1,6 +1,5 @@
-import hashlib
-import redis
 from collections import deque
+import hashlib
 
 def solveMazeWithPath(maze):
     R, C = len(maze), len(maze[0])
@@ -35,18 +34,34 @@ def solveMazeWithPath(maze):
             queue.appendleft((nr, nc, coord[2] + 1, coord[3] + [nr * C + nc]))
 
 
-mazeFile = input("Maze txt name: ")
-def hash_file(hashList):
+def hash_file(txt):
     h = hashlib.sha1()
 
-    with open(mazeFile, 'rb') as file:
+    with open(txt, 'rb') as file:
         chunk = 0
         while chunk != b'':
             chunk = file.read(1024)
             h.update(chunk)
-        return h.hexdigest()
-message = hash_file(mazeFile)
-print(message)
+        check_list(h.hexdigest())
+
+
+def check_list(code):
+    with open('solvedMazes.txt', 'r') as fp:
+        file = fp.read()
+        if code in file:
+            print("Exibiria resposta salva")
+        else:
+            save_hash(code)
+
+
+def save_hash(code):
+    with open('solvedMazes.txt', 'a') as fp:
+        fp.write("%s\n" % code)
+        print('Aqui chama func solver')
+
+
+mazeFile = input("Maze txt name: ")
+hash_file(mazeFile)
 
 with open(mazeFile) as f:
     maze = []
